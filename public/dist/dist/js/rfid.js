@@ -1,5 +1,5 @@
 // Membuat objek WebSocket
-var socket = new WebSocket("ws:192.168.103.17/ws"); // Ganti dengan alamat server WebSocket Anda
+var socket = new WebSocket("ws:192.168.100.64:80/ws"); // Ganti dengan alamat server WebSocket Anda
 
 // Ketika koneksi berhasil dibuka
 socket.addEventListener("open", (event) => {

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\StudentController;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,4 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/siswa/update/{id}', [StudentController::class, 'update_student'])->name('update-student');
     Route::get('/siswa/delete/{id}', [StudentController::class, 'delete_student'])->name('delete-student');
     // end Student
+});
+Route::post('/siswa/create/uiud', function (Request $request) {
+    $uid = $request->getContent();
+    session(['uid' => $uid]);
+    return response('Data received successfully.');
 });

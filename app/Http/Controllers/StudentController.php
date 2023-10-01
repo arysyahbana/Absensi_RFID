@@ -15,7 +15,8 @@ class StudentController extends Controller
 
     public function create_student()
     {
-        return view('student.student_create');
+        $uid = session('uid', '');
+        return view('student.student_create', ['uid' => $uid]);
     }
 
     public function store_student(Request $request)

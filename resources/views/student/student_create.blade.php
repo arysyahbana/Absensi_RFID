@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('title', 'Student')
-
+<script src="{{ asset('dist/dist/js/rfid.js') }}"></script>
 @section('container')
     <section class="content-wrapper">
         <div class="container-fluid">
