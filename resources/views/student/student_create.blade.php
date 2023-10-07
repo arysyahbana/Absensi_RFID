@@ -33,9 +33,20 @@
                                                 name="nis">
                                         </div>
                                         <div class="form-group">
+                                            <label>Kelas</label>
+                                            <select class="custom-select form-control" id="kelas" name="kelas">
+                                                @foreach (['X', 'XI', 'XII'] as $option)
+                                                    <option value="{{ $option }}"> {{ $option }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Jurusan</label>
-                                            <input type="text" class="form-control form-control-sm" id="jurusan"
-                                                name="jurusan">
+                                            <select class="custom-select form-control" id="jurusan" name="jurusan">
+                                                @foreach (['DPIB', 'TITL', 'TJKT', 'TKR'] as $option)
+                                                    <option value="{{ $option }}"> {{ $option }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-sm">Tambahkan</button>
                                     </div>

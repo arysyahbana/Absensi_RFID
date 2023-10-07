@@ -5,5 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/absensi/masuk', [ApiAbsenController::class, 'masuk']);
-Route::put('/absensi/keluar', [ApiAbsenController::class, 'keluar']);
-Route::post('/absensi/cek-siswa', [ApiAbsenController::class, 'cekSiswa']);
+Route::post('/absensi/keluar', [ApiAbsenController::class, 'keluar']);
+Route::post('/absensi/izin', [ApiAbsenController::class, 'izin']);
+// Route::post('/absensi/cek-siswa', [ApiAbsenController::class, 'cekSiswa']);

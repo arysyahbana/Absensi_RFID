@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -25,6 +26,7 @@ class StudentController extends Controller
             'uid' => 'required',
             'nama' => 'required',
             'nis' => 'required',
+            'kelas' => 'required',
             'jurusan' => 'required'
         ]);
 
@@ -32,6 +34,7 @@ class StudentController extends Controller
         $store->uid = $request->uid;
         $store->name = $request->nama;
         $store->nis = $request->nis;
+        $store->kelas = $request->kelas;
         $store->jurusan = $request->jurusan;
         $store->save();
         return redirect()->route('student');
@@ -50,12 +53,14 @@ class StudentController extends Controller
             'uid' => 'required',
             'nama' => 'required',
             'nis' => 'required',
+            'kelas' => 'required',
             'jurusan' => 'required'
         ]);
 
         $update->uid = $request->uid;
         $update->name = $request->nama;
         $update->nis = $request->nis;
+        $update->kelas = $request->kelas;
         $update->jurusan = $request->jurusan;
         $update->update();
         return redirect()->route('student');
@@ -66,5 +71,23 @@ class StudentController extends Controller
         $delete = Student::where('id', $id)->first();
         $delete->delete();
         return redirect()->route('student');
+    }
+
+    public function naik_kelas()
+    {
+        $student = Student::whereIn('kelas', ['X', 'XI', 'XII'])->get();
+
+        $student->each(function ($student) {
+            if ($student->kelas == 'XII') {
+                $student->kelas = 'Lulus';
+            } elseif ($student->kelas == 'XI') {
+                $student->kelas = 'XII';
+            } elseif ($student->kelas == 'X') {
+                $student->kelas = 'XI';
+            }
+
+            $student->save();
+        });
+        return back();
     }
 }

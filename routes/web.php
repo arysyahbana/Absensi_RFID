@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\BkController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
@@ -44,7 +45,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     // Absensi
-    Route::get('/absensi', [AbsenController::class, 'show_absen'])->name('absen');
+    Route::get('/absensi/all', [AbsenController::class, 'show_absen'])->name('absen');
+    Route::get('/absensi/tjkt', [AbsenController::class, 'show_absen_tkj'])->name('absen_tkj');
+    Route::get('/absensi/tkr', [AbsenController::class, 'show_absen_tkr'])->name('absen_tkr');
+    Route::get('/absensi/dpib', [AbsenController::class, 'show_absen_dpib'])->name('absen_dpib');
+    Route::get('/absensi/titl', [AbsenController::class, 'show_absen_titl'])->name('absen_titl');
     // Route::get('/absensi/create', [AbsenController::class, 'create_absen'])->name('create-absen');
     // Route::post('/absensi/store', [AbsenController::class, 'add_absen'])->name('store-absen');
     Route::get('/absensi/edit/{id}', [AbsenController::class, 'edit_absen'])->name('edit-absen');
@@ -59,7 +64,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/siswa/edit/{id}', [StudentController::class, 'edit_student'])->name('edit-student');
     Route::post('/siswa/update/{id}', [StudentController::class, 'update_student'])->name('update-student');
     Route::get('/siswa/delete/{id}', [StudentController::class, 'delete_student'])->name('delete-student');
+    Route::get('/kelas/naik-kelas', [StudentController::class, 'naik_kelas'])->name('naik_kelas');
     // end Student
+
+    //Bimbingan Konseling
+    Route::get('/bk', [BkController::class, 'show_bk'])->name('bk');
+    Route::get('/bk/restore-accont/{id}', [BkController::class, 'restore_acc'])->name('restore_acc');
+    //end Bimbingan Konseling
+
+    //kelas
+    Route::get('/kelas/tkj/{kelas}', [AbsenController::class, 'show_absen_tkj_by_kelas'])->name('kelas_tkj');
+    //end kelas
 });
 Route::post('/siswa/create/uiud', function (Request $request) {
     $uid = $request->getContent();

@@ -1,7 +1,7 @@
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="{{ asset('dist/plugins/jquery/jquery.min.js') }}"></script>
-
+<script src="{{ asset('dist/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('dist/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
@@ -54,6 +54,8 @@
         });
     });
 </script>
+
+{{-- <script src="{{ asset('dist/dist/js/kelas.js') }}"></script> --}}
 
 {{-- Bootstrap CSS --}}
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

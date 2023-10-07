@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Absensi')
+@section('title', 'Bimbingan Konseling')
 
 @section('container')
     <section class="content-wrapper">
@@ -9,7 +9,7 @@
 
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h2 class="font-weight-bold">Data Absensi</h2>
+                            <h2 class="font-weight-bold">Data Siswa Telat/Terlambat(3x)</h2>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -22,30 +22,27 @@
                                         <th>Nama Siswa</th>
                                         <th>Kelas</th>
                                         <th>Jurusan</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Keluar</th>
-                                        <th>Keterangan</th>
-                                        <th>Izin</th>
+                                        <th>Terlambat</th>
+                                        <th>Alfa</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($absen as $data)
+                                    @foreach ($student as $data)
                                         <tr>
-                                            <td>{{ $data->rStudent->name }}</td>
-                                            <td>{{ $data->rStudent->kelas }}</td>
-                                            <td>{{ $data->rStudent->jurusan }}</td>
-                                            <td>{{ $data->jam_masuk }}</td>
-                                            <td>{{ $data->jam_keluar }}</td>
-                                            <td>{{ $data->keterangan }}</td>
-                                            <td>{{ $data->izin }}</td>
-                                            {{-- <td><a href="{{ route('edit-absen', $data->id) }}"
+                                            <td>{{ $data->name }}</td>
+                                            <td>{{ $data->kelas }}</td>
+                                            <td>{{ $data->jurusan }}</td>
+                                            <td>{{ $data->terlambat }}</td>
+                                            <td>{{ $data->alfa }}</td>
+                                            <td><a href="{{ route('restore_acc', $data->id) }}"
                                                     class="btn btn-sm btn-success"><i class="bi bi-pencil-square"></i>
-                                                    Edit</a>
-                                                <a href="{{ route('delete-absen', $data->id) }}"
+                                                    Pulihkan Akun</a>
+                                                {{-- <a href="{{ route('delete-absen', $data->id) }}"
                                                     onclick="return confirm('data akan dihapus')"
                                                     class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i>
-                                                    Delete</a>
-                                            </td> --}}
+                                                    Delete</a> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

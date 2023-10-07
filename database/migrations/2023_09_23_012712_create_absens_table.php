@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('absens', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->foreignId('student_id');
             $table->dateTime('jam_masuk')->nullable();
             $table->dateTime('jam_keluar')->nullable();
             $table->string('keterangan')->nullable();
+            $table->integer('izin')->nullable();
         });
     }
 

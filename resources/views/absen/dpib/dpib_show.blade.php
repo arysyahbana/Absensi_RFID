@@ -6,10 +6,22 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h2 class="font-weight-bold">Data Absensi</h2>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 class="font-weight-bold">Data Absensi DPIB</h2>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Pilih Kelas
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Kelas X</a>
+                                        <a class="dropdown-item" href="#">Kelas XI</a>
+                                        <a class="dropdown-item" href="#">Kelas XII</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -29,7 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($absen as $data)
+                                    @foreach ($absen_dpib as $data)
                                         <tr>
                                             <td>{{ $data->rStudent->name }}</td>
                                             <td>{{ $data->rStudent->kelas }}</td>
@@ -60,5 +72,6 @@
             <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
+
     </section>
 @endsection

@@ -48,13 +48,61 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('absen') }}"
+                        <a href="#"
                             class="nav-link {{ Request::is('absensi') || Request::is('absensi/*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>
                                 Absensi
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('absen_dpib') }}"
+                                    class="nav-link {{ Request::is('absensi/dpib') ? 'active' : '' }} ml-2">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Absensi DPIB
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('absen_titl') }}"
+                                    class="nav-link {{ Request::is('absensi/titl') ? 'active' : '' }} ml-2">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Absensi TITL
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('absen_tkj') }}"
+                                    class="nav-link {{ Request::is('absensi/tjkt') ? 'active' : '' }} ml-2">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Absensi TJKT
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('absen_tkr') }}"
+                                    class="nav-link {{ Request::is('absensi/tkr') ? 'active' : '' }} ml-2">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Absensi TKR
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('absen') }}"
+                                    class="nav-link {{ Request::is('absensi/all') ? 'active' : '' }} ml-2">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>
+                                        Absensi Semua Siswa
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('student') }}"
@@ -62,8 +110,21 @@
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 Siswa
-                                <span class="right badge badge-danger">New</span>
                             </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('bk') }}"
+                            class="nav-link {{ Request::is('bk') || Request::is('bk/*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Bimbingan Konseling
+                            </p>
+                            @if ($notif = App\Models\Student::where('alfa', 3)->orWhere('terlambat', 3)->count())
+                                <span class="badge badge-danger sidebar-badge">
+                                    {{ $notif }}
+                                </span>
+                            @endif
                         </a>
                     </li>
                     <li class="nav-header">

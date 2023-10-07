@@ -9,7 +9,20 @@
 
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h2 class="font-weight-bold">Data Absensi</h2>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Pilih Kelas
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#" data-kelas="X">Kelas X</a>
+                                        <a class="dropdown-item" href="#" data-kelas="XI">Kelas XI</a>
+                                        <a class="dropdown-item" href="#" data-kelas="XII">Kelas XII</a>
+                                    </div>
+                                </div>
+                                <h2 class="font-weight-bold">Data Absensi TJKT</h2>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -29,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($absen as $data)
+                                    @foreach ($absen_tkj as $data)
                                         <tr>
                                             <td>{{ $data->rStudent->name }}</td>
                                             <td>{{ $data->rStudent->kelas }}</td>

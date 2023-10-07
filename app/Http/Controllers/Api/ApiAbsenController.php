@@ -15,58 +15,154 @@ class ApiAbsenController extends Controller
         $request->validate([
             'uid' => 'required'
         ]);
-        $ket = "Hadir";
-        $student = Student::where('uid', $request->uid)->first();
-        $now = Carbon::now();
-        $tgl = $now->format('Y-m-d H:i');
 
-        if ($now->hour > 7) {
-            $ket = "Terlambat";
+        $student = Student::where('uid', $request->uid)->first();
+
+        if ($student === null) {
+            return response()->json([
+                'nama' => "unknown card",
+                'ket' => "Not found"
+            ]);
         }
 
-        $store = new Absen();
-        $store->student_id = $student->id;
-        $store->jam_masuk = $tgl;
-        // $store->jam_keluar = $request->jam_keluar;
-        $store->keterangan = $ket;
-        $store->save();
+        $now = Carbon::now();
+        $today = Carbon::today();
+        $tgl = $now->format('Y-m-d H:i');
+        $ket = ($now->hour > 7) ? "Terlambat" : "Hadir";
 
+        $absen = Absen::where('student_id', $student->id)
+            ->whereDate('jam_masuk', $today)
+            ->first();
 
-        // $store = Absen::create($request->all());
-        return response()->json($student->name);
+        if ($absen) {
+            return response()->json([
+                'nama' => $student->name,
+                'ket' => 'Sudah Ambil Absen'
+            ]);
+        }
+
+        if ($student->alfa == 3 || $student->terlambat == 3) {
+            $response = [
+                'nama' => $student->name,
+                'ket' => 'Tidak Bisa Ambil Absen, Silahkan Pergi ke Ruang BK'
+            ];
+        } else {
+            if ($ket == 'Terlambat') {
+                $student->terlambat = $student->terlambat + 1;
+                $student->update();
+            }
+
+            $store = new Absen([
+                'student_id' => $student->id,
+                'jam_masuk' => $tgl,
+                'keterangan' => $ket
+            ]);
+            $store->save();
+
+            $response = [
+                'nama' => $student->name,
+                'ket' => $ket
+            ];
+        }
+
+        return response()->json($response);
     }
+
 
     public function keluar(Request $request)
     {
         $request->validate([
             'uid' => 'required'
         ]);
-        $today = Carbon::today();
+
         $student = Student::where('uid', $request->uid)->first();
+
+        if ($student === null) {
+            return response()->json([
+                'nama' => "unknown card",
+                'ket' => "Not found"
+            ]);
+        }
+
+        $today = Carbon::today();
         $now = Carbon::now();
         $tgl = $now->format('Y-m-d H:i');
 
-        $store = Absen::where('jam_masuk', $today);
-        $store->student_id = $student->id;
-        // $store->jam_masuk = $tgl;
-        $store->jam_keluar = $request->jam_keluar;
-        // $store->keterangan = "Pulang";
+        $store = Absen::where('student_id', $student->id)
+            ->whereDate('jam_masuk', $today)
+            ->first();
+
+        if (!$store) {
+            return response()->json([
+                'nama' => $student->name,
+                'ket' => 'Belum Absen Masuk'
+            ]);
+        }
+        if ($store->jam_keluar) {
+            return response()->json([
+                'nama' => $student->name,
+                'ket' => 'Sudah Ambil Absen'
+            ]);
+        }
+
+        $store->jam_keluar = $tgl;
         $store->update();
 
-
-        // $store = Absen::create($request->all());
-        return response()->json($store);
+        return response()->json([
+            'nama' => $student->name,
+            'ket' => 'Pulang'
+        ]);
     }
 
-    public function cekSiswa(Request $request)
+    public function izin(Request $request)
     {
         $request->validate([
             'uid' => 'required'
         ]);
-        $murid = Student::where('uid', $request->uid)->first();
-        if ($murid == null) {
-            return response()->json("Murid tidak ditemukan");
-        } else {
+
+        $student = Student::where('uid', $request->uid)->first();
+
+        if ($student === null) {
+            return response()->json([
+                'nama' => "unknown card",
+                'ket' => "Not found"
+            ]);
         }
+
+        $today = Carbon::today();
+        $now = Carbon::now();
+        $tgl = $now->format('Y-m-d H:i');
+
+        $store = Absen::where('student_id', $student->id)
+            ->whereDate('jam_masuk', $today)
+            ->first();
+
+        if (!$store) {
+            return response()->json([
+                'nama' => $student->name,
+                'ket' => 'Belum Absen Masuk'
+            ]);
+        }
+
+        $jml_izin = $store->izin = $store->izin + 1;
+        $store->update();
+
+        return response()->json([
+            'nama' => $student->name,
+            'ket' => 'izin ' . $jml_izin
+        ]);
     }
+
+    // public function cekSiswa(Request $request)
+    // {
+    //     $request->validate([
+    //         'uid' => 'required'
+    //     ]);
+    //     $murid = Student::where('uid', $request->uid)->first();
+    //     if ($murid == null) {
+    //         return response()->json("Murid tidak ditemukan");
+    //     } else {
+    //         return response()->json("Murid ditemukan");
+    //     }
+    // }
 }
